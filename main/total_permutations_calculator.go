@@ -1,10 +1,10 @@
 package main
 
-func totalPermutations(boardSize int) int64 {
+func totalPermutations(boardSize int) uint64 {
 	totalCells := boardSize * boardSize
-	result := int64(totalCells)
+	result := uint64(totalCells)
 	for i := 1; i < boardSize; i++ {
-		mult := int64(totalCells - i)
+		mult := uint64(totalCells - i)
 		result *= mult
 	}
 	return result
