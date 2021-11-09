@@ -22,7 +22,7 @@ func generateChildBoardStates(
 				allQueens = append(allQueens, rotation...)
 			}
 
-			hashes := generateHashStrings(allQueens, boardSize)
+			hashes := generateHashStrings(allQueens)
 			childBoard := NewBoard(
 				c,
 				b.size+1,

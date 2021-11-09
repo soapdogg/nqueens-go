@@ -1,28 +1,29 @@
 package main
 
-import "strconv"
+import (
+	"sort"
+	"strconv"
+)
 
-func generateHashStrings(mirroredAndRotatedBoards []map[int]bool, boardSize int) map[string]bool {
+func generateHashStrings(mirroredAndRotatedBoards []map[int]bool) map[string]bool {
 	result := map[string]bool{}
 	for i := 0; i < len(mirroredAndRotatedBoards); i++ {
-		board := make([]bool, boardSize*boardSize)
-		b := mirroredAndRotatedBoards[i]
-		for j := range b {
-			board[j] = true
-		}
-		hash := generateHashString(board)
+		hash := generateHashString(mirroredAndRotatedBoards[i])
 		result[hash] = true
 	}
 	return result
 }
 
-func generateHashString(queens []bool) string {
+func generateHashString(queens map[int]bool) string {
+	q := make([]int, 0, len(queens))
+	for i := range queens {
+		q = append(q, i)
+	}
+	sort.Ints(q)
 	result := ""
-	for i := 0; i < len(queens); i++ {
-		if queens[i] {
-			result += strconv.Itoa(i)
-			result += "-"
-		}
+	for _, i := range q {
+		result += strconv.Itoa(i)
+		result += "-"
 	}
 	return result
 }
