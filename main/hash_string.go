@@ -2,10 +2,15 @@ package main
 
 import "strconv"
 
-func generateHashStrings(mirroredAndRotatedBoards [][]bool) map[string] bool{
+func generateHashStrings(mirroredAndRotatedBoards []map[int]bool, boardSize int) map[string]bool {
 	result := map[string]bool{}
 	for i := 0; i < len(mirroredAndRotatedBoards); i++ {
-		hash := generateHashString(mirroredAndRotatedBoards[i])
+		board := make([]bool, boardSize*boardSize)
+		b := mirroredAndRotatedBoards[i]
+		for j := range b {
+			board[j] = true
+		}
+		hash := generateHashString(board)
 		result[hash] = true
 	}
 	return result
