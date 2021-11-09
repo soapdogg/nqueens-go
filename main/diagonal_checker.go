@@ -5,7 +5,7 @@ func isQueenInDiagonal(
 	cellY int,
 	xDelta int,
 	yDelta int,
-	queens [] bool,
+	queens map[int]bool,
 	boardSize int,
 ) bool {
 
@@ -13,7 +13,7 @@ func isQueenInDiagonal(
 	y := cellY + yDelta
 
 	for x >= 0 && x < boardSize && y >= 0 && y < boardSize {
-		diagCell := x * boardSize + y
+		diagCell := x*boardSize + y
 		if queens[diagCell] {
 			return true
 		}

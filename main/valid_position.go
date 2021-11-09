@@ -3,7 +3,7 @@ package main
 func isQueenPositionValid(
 	cell int,
 	boardSize int,
-	queens [] bool,
+	queens map[int]bool,
 ) bool {
 	if queens[cell] {
 		return false
@@ -13,8 +13,8 @@ func isQueenPositionValid(
 	cellY := cell % boardSize
 
 	for i := 0; i < boardSize; i++ {
-		horizontalCell := i * boardSize + cellY
-		verticalCell := cellX * boardSize + i
+		horizontalCell := i*boardSize + cellY
+		verticalCell := cellX*boardSize + i
 		if queens[horizontalCell] || queens[verticalCell] {
 			return false
 		}

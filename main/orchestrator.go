@@ -7,21 +7,11 @@ func orchestrate(boardSize int) {
 	totalPermutations := totalPermutations(boardSize)
 	boardStateStack := NewBoardStateStack()
 
-	initalBoard :=  make([]bool, boardSize * boardSize)
+	initialBoard := map[int]bool{}
 
-	var terminalBoardStates [][]bool
-
-	allQueens := [][]bool{}
-	mirroredQueens := getAllMirrors(initalBoard, boardSize)
-	allQueens = append(allQueens, mirroredQueens...)
-	for _, mirroredQueen := range mirroredQueens {
-		rotation := getAllRotations(mirroredQueen, boardSize)
-		allQueens = append(allQueens, rotation...)
-	}
-
-	hashes := generateHashStrings(allQueens)
-
-	initialBoardState := NewBoard(initalBoard, 0, hashes)
+	uniqueTerminalBoardCount := 0
+	var hashes = map[string]bool{}
+	initialBoardState := NewBoard(initialBoard, 0, hashes)
 	boardStateStack.Push(initialBoardState)
 
 	totalTerminalBoards := 0
@@ -32,12 +22,12 @@ func orchestrate(boardSize int) {
 		boardState := boardStateStack.Pop()
 		totalBoardsProcesses++
 
-		if totalBoardsProcesses % 100 * boardSize == 0 {
+		if totalBoardsProcesses%100*boardSize == 0 {
 			fmt.Println("Processed ", totalBoardsProcesses, "/", totalPermutations, " boards; found ", totalTerminalBoards, " terminals, pruned ", totalPrunedBoards)
 		}
 
 		if boardState.size == boardSize {
-			terminalBoardStates = append(terminalBoardStates, boardState.queenPositions)
+			uniqueTerminalBoardCount++
 			totalTerminalBoards += len(boardState.GetHashes())
 			continue
 		}
@@ -66,9 +56,8 @@ func orchestrate(boardSize int) {
 
 	fmt.Println("Max board permutations: ", totalPermutations)
 	fmt.Println("Total terminal boards: ", totalTerminalBoards)
-	fmt.Println("Unique terminal boards identified: ", len(terminalBoardStates))
+	fmt.Println("Unique terminal boards identified: ", uniqueTerminalBoardCount)
 	fmt.Println("Total boards processed: ", totalBoardsProcesses)
 	fmt.Println("Total boards pruned: ", totalPrunedBoards)
-
 
 }
