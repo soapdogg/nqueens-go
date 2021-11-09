@@ -15,14 +15,24 @@ func generateChildBoardStates(
 			}
 			c[i] = true
 
-			allQueens := [][]bool{}
+			var allQueens []map[int]bool
 			mirroredQueens := getAllMirrors(c, boardSize)
 			for _, mirroredQueen := range mirroredQueens {
 				rotation := getAllRotations(mirroredQueen, boardSize)
 				allQueens = append(allQueens, rotation...)
 			}
 
-			hashes := generateHashStrings(allQueens)
+			allQueens2 := [][]bool{}
+			for j := 0; j < len(allQueens); j++ {
+				queens := allQueens[j]
+				queen2 := make([]bool, boardSize*boardSize)
+				for i := range queens {
+					queen2[i] = true
+				}
+				allQueens2 = append(allQueens2, queen2)
+			}
+
+			hashes := generateHashStrings(allQueens2)
 			childBoard := NewBoard(
 				c,
 				b.size+1,

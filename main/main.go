@@ -7,7 +7,7 @@ import (
 
 func main() {
 	start := time.Now().UnixNano() / int64(time.Millisecond)
-	orchestrate(9)
+	orchestrate(8)
 	end := time.Now().UnixNano() / int64(time.Millisecond)
 
 	elapsedMillis := end - start
